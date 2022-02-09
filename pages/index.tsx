@@ -1,4 +1,4 @@
-import { memo, useState, FC } from 'react'
+import { memo, useState, FC, ChangeEventHandler } from 'react'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
@@ -42,7 +42,13 @@ interface ICell {
 }
 
 const Cell: FC<ICell> = ({ setter, i, j, data }) => {
-  return <div />
+  const onChange: ChangeEventHandler<HTMLInputElement> = evt => {
+    setter(m => {
+      m[j][i].char = evt.target?.value
+      return m
+    })
+  }
+  return <input value={data.char} onChange={onChange} className="cell" />
 }
 
 const Header = memo(() => (
