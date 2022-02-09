@@ -1,4 +1,4 @@
-import { memo, useState, FC, ChangeEventHandler } from 'react'
+import { memo, useState, FC, ChangeEventHandler, MouseEventHandler } from 'react'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
@@ -54,7 +54,12 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       return [...m]
     })
   }
-  return <input value={data.char} onChange={onChange} className={styles.cell} maxLength={1} />
+  const onRightClick: MouseEventHandler<HTMLInputElement> = evt => {
+    evt.preventDefault()
+  }
+  return (
+    <input value={data.char} onChange={onChange} className={styles.cell} maxLength={1} onContextMenu={onRightClick} />
+  )
 }
 
 const Header = memo(() => (
