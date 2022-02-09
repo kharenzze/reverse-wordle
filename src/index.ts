@@ -1,10 +1,15 @@
 export enum CharCellStatus {
   None,
   Exist,
-  Exact
+  Exact,
 }
 
 export interface CharCell {
-  status: CharCellStatus,
+  status: CharCellStatus
   char: string
 }
+
+export const getDefaultCharCell = (): CharCell => ({
+  status: CharCellStatus.None,
+  char: '',
+})
