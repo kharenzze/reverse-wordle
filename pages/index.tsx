@@ -48,7 +48,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       return m
     })
   }
-  return <input value={data.char} onChange={onChange} className="cell" />
+  return <input value={data.char} onChange={onChange} className={styles.cell}/>
 }
 
 const Header = memo(() => (

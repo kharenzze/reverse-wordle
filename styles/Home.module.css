@@ -20,7 +20,8 @@
 }
 
 .cell {
-  width: 16px;
-  height: 16px;
+  width: 7em;
+  height: 7em;
+  border-radius: 10%;
   background: aliceblue;
 }
