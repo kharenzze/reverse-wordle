@@ -1,9 +1,9 @@
-import { memo, useState } from 'react'
+import { memo, useState, FC } from 'react'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { getDefaultCharCell } from '../src'
+import { getDefaultCharCell, CharCell } from '../src'
 
 const DIM = 5
 
@@ -14,14 +14,35 @@ const useMatrix = () =>
     return matrix.map(row => row.map(getDefaultCharCell))
   })
 
+type MatrixSetter = ReturnType<typeof useMatrix>[1]
+
 const Home: NextPage = () => {
   const { error, data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   const [matrixData, setMatrixData] = useMatrix()
+  const renderCell = (j: number) => (c: CharCell, i: number) =>
+    <Cell setter={setMatrixData} i={i} j={j} key={i} data={c} />
+  const body = matrixData.map((row, j) => (
+    <div className="row" key={j}>
+      {row.map(renderCell(j))}
+    </div>
+  ))
   return (
     <div className={styles.container}>
       <Header />
+      {body}
     </div>
   )
+}
+
+interface ICell {
+  setter: MatrixSetter
+  i: number
+  j: number
+  data: CharCell
+}
+
+const Cell: FC<ICell> = ({ setter, i, j, data }) => {
+  return <div />
 }
 
 const Header = memo(() => (
