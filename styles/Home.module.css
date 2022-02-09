@@ -26,3 +26,11 @@
   border-radius: 10%;
   background: aliceblue;
 }
+
+.cell.exact {
+  background: lawngreen;
+}
+
+.cell.exist {
+   background: yellow;
+ }

@@ -4,6 +4,14 @@ export enum CharCellStatus {
   Exact,
 }
 
+export const getNextStatus = (status: CharCellStatus) => {
+  const next = status + 1
+  if (next > CharCellStatus.Exact) {
+    return CharCellStatus.None
+  }
+  return next
+}
+
 export interface CharCell {
   status: CharCellStatus
   char: string

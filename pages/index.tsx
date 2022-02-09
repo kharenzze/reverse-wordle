@@ -1,9 +1,10 @@
-import { memo, useState, FC, ChangeEventHandler, MouseEventHandler } from 'react'
+import { ChangeEventHandler, FC, memo, MouseEventHandler, useState } from 'react'
+import cx from 'classnames'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { getDefaultCharCell, CharCell } from '../src'
+import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus } from '../src'
 
 const DIM = 5
 
@@ -56,9 +57,20 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   }
   const onRightClick: MouseEventHandler<HTMLInputElement> = evt => {
     evt.preventDefault()
+    setter(m => {
+      m[j][i] = {
+        ...data,
+        status: getNextStatus(data.status),
+      }
+      return [...m]
+    })
   }
+  const classname = cx(styles.cell, {
+    [styles.exact]: data.status === CharCellStatus.Exact,
+    [styles.exist]: data.status === CharCellStatus.Exist,
+  })
   return (
-    <input value={data.char} onChange={onChange} className={styles.cell} maxLength={1} onContextMenu={onRightClick} />
+    <input value={data.char} onChange={onChange} className={classname} maxLength={1} onContextMenu={onRightClick} />
   )
 }
 
