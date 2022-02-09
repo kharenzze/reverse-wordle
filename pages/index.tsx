@@ -1,8 +1,10 @@
 import type { NextPage } from 'next'
+import { useFetch } from "use-http";
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  const { error, data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   return (
     <div className={styles.container}>
       <Head>
