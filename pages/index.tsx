@@ -1,11 +1,22 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import { getDefaultCharCell } from '../src'
+
+const DIM = 5
+
+const useMatrix = () =>
+  useState(() => {
+    const initialize = () => Array(DIM).fill(0)
+    const matrix = initialize().map(initialize)
+    return matrix.map(row => row.map(getDefaultCharCell))
+  })
 
 const Home: NextPage = () => {
   const { error, data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
+  const [matrixData, setMatrixData] = useMatrix()
   return (
     <div className={styles.container}>
       <Header />
