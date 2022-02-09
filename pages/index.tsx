@@ -47,11 +47,14 @@ interface ICell {
 const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   const onChange: ChangeEventHandler<HTMLInputElement> = evt => {
     setter(m => {
-      m[j][i].char = evt.target?.value
-      return m
+      m[j][i] = {
+        ...data,
+        char: evt.target?.value,
+      }
+      return [...m]
     })
   }
-  return <input value={data.char} onChange={onChange} className={styles.cell} />
+  return <input value={data.char} onChange={onChange} className={styles.cell} maxLength={1} />
 }
 
 const Header = memo(() => (
