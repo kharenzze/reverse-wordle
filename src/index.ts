@@ -80,7 +80,6 @@ export const SummaryLogic = {
     //regex sample: /^(?=[^g]+)(?=.*l)(?=.*a)(?=.*u)(?=[^l][^ua].[^a]r).{5}$/gm
     const blacklist = `[^${Array.from(summary.blacklist).join('')}]`
     const blacklistPart = `(?=${blacklist.repeat(DIM)})`
-    console.log(blacklist)
     const mustExistSet: Set<string> = summary.byPosition.reduce((acc, pos) => {
       for (let c of pos.differentFrom) {
         acc.add(c)
@@ -99,7 +98,7 @@ export const SummaryLogic = {
       return '.'
     })
     const byPositionPart = `(?=${byPositionArray.join('')})`
-    const finalString = `/^${blacklistPart}${mustExistPart}${byPositionPart}.{${DIM}}$/gm`
-    return new RegExp(finalString)
+    const finalString = `^${blacklistPart}${mustExistPart}${byPositionPart}.{${DIM}}$`
+    return new RegExp(finalString, 'gm')
   },
 }
