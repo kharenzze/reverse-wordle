@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS, summarizeMatrix } from '../src'
+import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS, SummaryLogic } from '../src'
 
 const useMatrix = () =>
   useState(() => {
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     </div>
   ))
   const onClickSolve = () => {
-    const summary = summarizeMatrix(matrixData)
+    const summary = SummaryLogic.fromMatrix(matrixData)
     console.log(summary)
   }
   return (
