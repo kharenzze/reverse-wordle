@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS } from '../src'
+import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS, summarizeMatrix } from '../src'
 
 const useMatrix = () =>
   useState(() => {
@@ -25,12 +25,17 @@ const Home: NextPage = () => {
       {row.map(renderCell(j))}
     </div>
   ))
+  const onClickSolve = () => {
+    const summary = summarizeMatrix(matrixData)
+    console.log(summary)
+  }
   return (
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to Reverse Wordle!</h1>
         {body}
+        <button onClick={onClickSolve}>Solve</button>
       </main>
     </div>
   )
