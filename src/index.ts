@@ -24,3 +24,5 @@ export const getDefaultCharCell = (): CharCell => ({
   status: CharCellStatus.None,
   char: '',
 })
+
+//regex sample: /^(?=[^g]+)(?=.*l)(?=.*a)(?=.*u)(?=[^l][^ua].[^a]r).{5}$/gm
