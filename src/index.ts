@@ -47,8 +47,29 @@ const initilizeSummary = (): GameSummary => ({
     })),
 })
 
-export const summarizeMatrix = (matrix: CharCellStatus[][]): GameSummary => {
+export const summarizeMatrix = (matrix: CharCell[][]): GameSummary => {
   const summary = initilizeSummary()
-
+  for (let i of Array(ATTEMPS).keys()) {
+    for (let j of Array(DIM).keys()) {
+      const cell = matrix[i][j]
+      switch (cell.status) {
+        case CharCellStatus.None:
+          {
+            summary.blacklist.add(cell.char)
+          }
+          break
+        case CharCellStatus.Exist:
+          {
+            summary.byPosition[j].differentFrom.add(cell.char)
+          }
+          break
+        case CharCellStatus.Exact:
+          {
+            summary.byPosition[j].exact = cell.char
+          }
+          break
+      }
+    }
+  }
   return summary
 }
