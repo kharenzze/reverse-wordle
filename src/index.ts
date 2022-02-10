@@ -52,6 +52,9 @@ export const summarizeMatrix = (matrix: CharCell[][]): GameSummary => {
   for (let i of Array(ATTEMPS).keys()) {
     for (let j of Array(DIM).keys()) {
       const cell = matrix[i][j]
+      if (!cell.char) {
+        continue
+      }
       switch (cell.status) {
         case CharCellStatus.None:
           {
