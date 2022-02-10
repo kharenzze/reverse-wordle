@@ -4,14 +4,12 @@ import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus } from '../src'
-
-const DIM = 5
+import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS } from '../src'
 
 const useMatrix = () =>
   useState(() => {
-    const initialize = () => Array(DIM).fill(0)
-    const matrix = initialize().map(initialize)
+    const initialize = (n: number) => () => Array(n).fill(0)
+    const matrix = initialize(ATTEMPS)().map(initialize(DIM))
     return matrix.map(row => row.map(getDefaultCharCell))
   })
 

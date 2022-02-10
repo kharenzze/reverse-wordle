@@ -1,3 +1,6 @@
+export const DIM = 5
+export const ATTEMPS = 6
+
 export enum CharCellStatus {
   None,
   Exist,
