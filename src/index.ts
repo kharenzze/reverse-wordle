@@ -26,3 +26,29 @@ export const getDefaultCharCell = (): CharCell => ({
 })
 
 //regex sample: /^(?=[^g]+)(?=.*l)(?=.*a)(?=.*u)(?=[^l][^ua].[^a]r).{5}$/gm
+
+interface PositionSummary {
+  exact: String
+  differentFrom: Set<String>
+}
+
+interface GameSummary {
+  blacklist: Set<String>
+  byPosition: PositionSummary[]
+}
+
+const initilizeSummary = (): GameSummary => ({
+  blacklist: new Set(),
+  byPosition: Array(DIM)
+    .fill(0)
+    .map(() => ({
+      exact: '',
+      differentFrom: new Set(),
+    })),
+})
+
+export const summarizeMatrix = (matrix: CharCellStatus[][]): GameSummary => {
+  const summary = initilizeSummary()
+
+  return summary
+}
