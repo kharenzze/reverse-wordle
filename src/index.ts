@@ -25,15 +25,13 @@ export const getDefaultCharCell = (): CharCell => ({
   char: '',
 })
 
-//regex sample: /^(?=[^g]+)(?=.*l)(?=.*a)(?=.*u)(?=[^l][^ua].[^a]r).{5}$/gm
-
 interface PositionSummary {
-  exact: String
-  differentFrom: Set<String>
+  exact: string
+  differentFrom: Set<string>
 }
 
 interface GameSummary {
-  blacklist: Set<String>
+  blacklist: Set<string>
   byPosition: PositionSummary[]
 }
 
@@ -76,5 +74,32 @@ export const SummaryLogic = {
       }
     }
     return summary
+  },
+
+  toRegExp: (summary: GameSummary): RegExp => {
+    //regex sample: /^(?=[^g]+)(?=.*l)(?=.*a)(?=.*u)(?=[^l][^ua].[^a]r).{5}$/gm
+    const blacklist = `[^${Array.from(summary.blacklist).join('')}]`
+    const blacklistPart = `(?=${blacklist.repeat(DIM)})`
+    console.log(blacklist)
+    const mustExistSet: Set<string> = summary.byPosition.reduce((acc, pos) => {
+      for (let c of pos.differentFrom) {
+        acc.add(c)
+      }
+      return acc
+    }, new Set() as Set<string>)
+    const mustExistPart: string = Array.from(mustExistSet)
+      .map(c => `(?=.*${c})`)
+      .join('')
+    const byPositionArray = summary.byPosition.map(p => {
+      if (p.exact) {
+        return p.exact
+      } else if (p.differentFrom.size) {
+        return `[^${Array.from(p.differentFrom).join('')}]`
+      }
+      return '.'
+    })
+    const byPositionPart = `(?=${byPositionArray.join('')})`
+    const finalString = `/^${blacklistPart}${mustExistPart}${byPositionPart}.{${DIM}}$/gm`
+    return new RegExp(finalString)
   },
 }
