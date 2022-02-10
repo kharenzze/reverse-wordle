@@ -36,3 +36,7 @@
 .cell.exist {
    background: yellow;
  }
+
+.solutions {
+  max-width: 100%;
+}

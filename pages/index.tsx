@@ -18,6 +18,7 @@ type MatrixSetter = ReturnType<typeof useMatrix>[1]
 const Home: NextPage = () => {
   const { error, data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   const [matrixData, setMatrixData] = useMatrix()
+  const [match, setMatch] = useState<RegExpMatchArray | null>(null)
   const renderCell = (j: number) => (c: CharCell, i: number) =>
     <Cell setter={setMatrixData} i={i} j={j} key={i} data={c} />
   const body = matrixData.map((row, j) => (
@@ -27,7 +28,15 @@ const Home: NextPage = () => {
   ))
   const onClickSolve = () => {
     const summary = SummaryLogic.fromMatrix(matrixData)
-    console.log(summary)
+    const regExp = SummaryLogic.toRegExp(summary)
+    const match = dataset.match(regExp)
+    setMatch(match)
+  }
+  const renderMatch = () => {
+    if (!match) {
+      return 'no results'
+    }
+    return <p className={styles.solutions}>{(match as RegExpMatchArray).join(', ')}</p>
   }
   return (
     <div className={styles.container}>
@@ -36,6 +45,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Welcome to Reverse Wordle!</h1>
         {body}
         <button onClick={onClickSolve}>Solve</button>
+        {renderMatch()}
       </main>
     </div>
   )
