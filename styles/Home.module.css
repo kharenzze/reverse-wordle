@@ -20,11 +20,13 @@
 }
 
 .cell {
-  width: 5em;
-  height: 5em;
+  width: 2em;
+  height: 2em;
   margin: 0.2em;
   border-radius: 10%;
   background: aliceblue;
+  font-size: 2em;
+  text-align: center;
 }
 
 .cell.exact {
