@@ -72,7 +72,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   const onChange: ChangeEventHandler<HTMLInputElement> = evt => {
     const char = evt.target?.value.toLowerCase() ?? ''
     setter(m => {
-      m[j][i] = {
+      m[i][j] = {
         ...data,
         char,
       }
@@ -82,7 +82,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   const onRightClick: MouseEventHandler<HTMLInputElement> = evt => {
     evt.preventDefault()
     setter(m => {
-      m[j][i] = {
+      m[i][j] = {
         ...data,
         status: getNextStatus(data.status),
       }
