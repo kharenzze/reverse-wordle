@@ -55,7 +55,9 @@ const Home: NextPage = () => {
         <span className={styles.version}>v{VERSION}</span>
         <h1 className={styles.title}>Welcome to Reverse Wordle!</h1>
         {body}
-        <button onClick={onClickSolve}>Solve</button>
+        <button role="button" className={styles.solve} onClick={onClickSolve}>
+          Solve
+        </button>
         {renderMatch()}
       </main>
     </div>

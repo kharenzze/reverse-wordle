@@ -1,49 +1,83 @@
 .container {
-  padding: 0 2rem;
+    padding: 0 2rem;
 }
 
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    min-height: 100vh;
+    padding: 4rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .version {
-  font-size: 12px;
-  position: absolute;
-  top: 0;
-  right: 0;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .title {
-  margin: 0 0 40px 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
+    margin: 0 0 40px 0;
+    line-height: 1.15;
+    font-size: 4rem;
+    text-align: center;
 }
 
 .cell {
-  width: 2em;
-  height: 2em;
-  margin: 0.2em;
-  border-radius: 10%;
-  background: aliceblue;
-  font-size: 2em;
-  text-align: center;
+    width: 2em;
+    height: 2em;
+    margin: 0.2em;
+    border-radius: 10%;
+    background: aliceblue;
+    font-size: 2em;
+    text-align: center;
 }
 
 .cell.exact {
-  background: lawngreen;
+    background: lawngreen;
 }
 
 .cell.exist {
-   background: yellow;
- }
+    background: yellow;
+}
 
 .solutions {
-  max-width: 100%;
+    max-width: 100%;
+}
+
+.solve {
+    align-items: center;
+    appearance: button;
+    background-color: #0276FF;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    font-family: "RM Neue", sans-serif;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 20px;
+    padding: 10px 21px;
+    text-align: center;
+    text-transform: none;
+    transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.solve:active {
+    background-color: #006AE8;
+}
+
+.solve:hover {
+    background-color: #1C84FF;
 }
