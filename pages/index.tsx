@@ -28,11 +28,11 @@ const Home: NextPage = () => {
   const { data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   const [matrixData, setMatrixData] = useMatrix()
   const [match, setMatch] = useState<RegExpMatchArray | null>(null)
-  const renderCell = (j: number) => (c: CharCell, i: number) =>
-    <Cell setter={setMatrixData} i={i} j={j} key={i} data={c} />
-  const body = matrixData.map((row, j) => (
-    <div className="row" key={j}>
-      {row.map(renderCell(j))}
+  const renderCell = (i: number) => (c: CharCell, j: number) =>
+    <Cell setter={setMatrixData} i={i} j={j} key={j} data={c} />
+  const body = matrixData.map((row, i) => (
+    <div className="row" key={i} data-row={i}>
+      {row.map(renderCell(i))}
     </div>
   ))
   const onClickSolve = () => {
@@ -96,6 +96,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   return (
     <input
       value={data.char.toUpperCase()}
+      data-col={j}
       onChange={onChange}
       className={classname}
       maxLength={1}
