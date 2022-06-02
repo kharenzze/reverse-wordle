@@ -2,6 +2,8 @@ export const DIM = 5
 export const ATTEMPS = 6
 export const VERSION = process.env.VERSION
 
+type vec2 = [number, number]
+
 export enum CharCellStatus {
   None,
   Exist,
