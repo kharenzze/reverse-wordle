@@ -13,6 +13,7 @@ import {
   ATTEMPS,
   SummaryLogic,
   VERSION,
+  getNextCellPos,
 } from '../src'
 
 const useMatrix = () =>
@@ -78,6 +79,9 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       }
       return [...m]
     })
+    const [nextI, nextJ] = getNextCellPos([i, j])
+    const nextInput = document.querySelector(`input[data-row="${nextI}"][data-col="${nextJ}"]`) as HTMLInputElement
+    nextInput?.focus()
   }
   const onRightClick: MouseEventHandler<HTMLInputElement> = evt => {
     evt.preventDefault()
@@ -96,6 +100,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   return (
     <input
       value={data.char.toUpperCase()}
+      data-row={i}
       data-col={j}
       onChange={onChange}
       className={classname}
