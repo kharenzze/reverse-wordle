@@ -4,7 +4,16 @@ import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import { CharCell, CharCellStatus, getDefaultCharCell, getNextStatus, DIM, ATTEMPS, SummaryLogic } from '../src'
+import {
+  CharCell,
+  CharCellStatus,
+  getDefaultCharCell,
+  getNextStatus,
+  DIM,
+  ATTEMPS,
+  SummaryLogic,
+  VERSION,
+} from '../src'
 
 const useMatrix = () =>
   useState(() => {
@@ -16,7 +25,7 @@ const useMatrix = () =>
 type MatrixSetter = ReturnType<typeof useMatrix>[1]
 
 const Home: NextPage = () => {
-  const { error, data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
+  const { data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   const [matrixData, setMatrixData] = useMatrix()
   const [match, setMatch] = useState<RegExpMatchArray | null>(null)
   const renderCell = (j: number) => (c: CharCell, i: number) =>
@@ -42,6 +51,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
+        <span className={styles.version}>v{VERSION}</span>
         <h1 className={styles.title}>Welcome to Reverse Wordle!</h1>
         {body}
         <button onClick={onClickSolve}>Solve</button>
