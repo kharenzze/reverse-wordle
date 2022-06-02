@@ -70,10 +70,11 @@ interface ICell {
 
 const Cell: FC<ICell> = ({ setter, i, j, data }) => {
   const onChange: ChangeEventHandler<HTMLInputElement> = evt => {
+    const char = evt.target?.value.toLowerCase() ?? ''
     setter(m => {
       m[j][i] = {
         ...data,
-        char: evt.target?.value,
+        char,
       }
       return [...m]
     })
@@ -93,7 +94,13 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
     [styles.exist]: data.status === CharCellStatus.Exist,
   })
   return (
-    <input value={data.char} onChange={onChange} className={classname} maxLength={1} onContextMenu={onRightClick} />
+    <input
+      value={data.char.toUpperCase()}
+      onChange={onChange}
+      className={classname}
+      maxLength={1}
+      onContextMenu={onRightClick}
+    />
   )
 }
 
