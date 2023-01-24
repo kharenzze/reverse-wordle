@@ -18,6 +18,12 @@ import {
 } from '../src'
 import { ModePicker, Mode } from '../src/ModePicker'
 
+const mapModeToCellStatus: Record<Mode, CharCellStatus> = {
+  [Mode.Type]: CharCellStatus.None,
+  [Mode.Green]: CharCellStatus.Exact,
+  [Mode.Yellow]: CharCellStatus.Exist,
+}
+
 const useMatrix = () =>
   useState(() => {
     const initialize = (n: number) => () => Array(n).fill(0)
@@ -117,23 +123,14 @@ const Cell: FC<ICell> = ({ setter, i, j, data, mode }) => {
     })
   }
   const onClick = () => {
-    if (mode === Mode.Green) {
-      setter(m => {
-        m[i][j] = {
-          ...data,
-          status: CharCellStatus.Exact,
-        }
-        return [...m]
-      })
-    } else if (mode === Mode.Yellow) {
-      setter(m => {
-        m[i][j] = {
-          ...data,
-          status: CharCellStatus.Exist,
-        }
-        return [...m]
-      })
-    }
+    const status = mapModeToCellStatus[mode]
+    setter(m => {
+      m[i][j] = {
+        ...data,
+        status,
+      }
+      return [...m]
+    })
   }
   const classname = cx(styles.cell, {
     [styles.exact]: data.status === CharCellStatus.Exact,
