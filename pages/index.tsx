@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FC, memo, MouseEventHandler, useState } from 'react'
+import { FC, memo, MouseEventHandler, useState, KeyboardEventHandler } from 'react'
 import cx from 'classnames'
 import type { NextPage } from 'next'
 import { useFetch } from 'use-http'
@@ -14,6 +14,7 @@ import {
   SummaryLogic,
   VERSION,
   getNextCellPos,
+  getPrevCellPos,
 } from '../src'
 
 const useMatrix = () =>
@@ -71,17 +72,31 @@ interface ICell {
   data: CharCell
 }
 
+const keyRegExp = /^Key[A-Z]$/
+const BACKSPACE_KEY = 'Backspace'
+
 const Cell: FC<ICell> = ({ setter, i, j, data }) => {
-  const onChange: ChangeEventHandler<HTMLInputElement> = evt => {
-    const char = evt.target?.value.toLowerCase() ?? ''
-    setter(m => {
-      m[i][j] = {
-        ...data,
-        char,
-      }
-      return [...m]
-    })
-    const [nextI, nextJ] = getNextCellPos([i, j])
+  const onKeyDown: KeyboardEventHandler<HTMLInputElement> = evt => {
+    const setChar = (char: string) => {
+      setter(m => {
+        m[i][j] = {
+          ...data,
+          char,
+        }
+        return [...m]
+      })
+    }
+    const code = evt.code
+    let next: number[] = []
+    if (keyRegExp.test(code)) {
+      const char = evt.key
+      setChar(char.toLowerCase())
+      next = getNextCellPos([i, j])
+    } else if (code === BACKSPACE_KEY) {
+      setChar('')
+      next = getPrevCellPos([i, j])
+    }
+    const [nextI, nextJ] = next
     const nextInput = document.querySelector(`input[data-row="${nextI}"][data-col="${nextJ}"]`) as HTMLInputElement
     nextInput?.focus()
   }
@@ -104,7 +119,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       value={data.char.toUpperCase()}
       data-row={i}
       data-col={j}
-      onChange={onChange}
+      onKeyDown={onKeyDown}
       className={classname}
       maxLength={1}
       onContextMenu={onRightClick}
