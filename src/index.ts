@@ -39,4 +39,17 @@ const getNextPosition =
     return [x, y + 1]
   }
 
+const getPrevPosition =
+  ([mx, my]: vec2) =>
+  ([x, y]: vec2): vec2 => {
+    if (x === 0 && y === 0) {
+      return [0, 0]
+    }
+    if (y === 0) {
+      return [x - 1, my - 1]
+    }
+    return [x, y - 1]
+  }
+
 export const getNextCellPos = getNextPosition(MATRIX_DIM)
+export const getPrevCellPos = getPrevPosition(MATRIX_DIM)
