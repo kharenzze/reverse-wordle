@@ -81,3 +81,14 @@
 .solve:hover {
     background-color: #1C84FF;
 }
+
+.radioGroup {
+  gap: 10px;
+}
+
+.box {
+  border: 1px solid black;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+}

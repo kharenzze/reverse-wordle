@@ -16,6 +16,7 @@ import {
   getNextCellPos,
   getPrevCellPos,
 } from '../src'
+import { ModePicker, Mode } from '../src/ModePicker'
 
 const useMatrix = () =>
   useState(() => {
@@ -30,6 +31,7 @@ const Home: NextPage = () => {
   const { data: dataset = '' } = useFetch('/5char.es.txt', {}, [])
   const [matrixData, setMatrixData] = useMatrix()
   const [match, setMatch] = useState<RegExpMatchArray | null>(null)
+  const [mode, setMode] = useState<Mode>(Mode.Type)
   const renderCell = (i: number) => (c: CharCell, j: number) =>
     <Cell setter={setMatrixData} i={i} j={j} key={j} data={c} />
   const body = matrixData.map((row, i) => (
@@ -37,6 +39,8 @@ const Home: NextPage = () => {
       {row.map(renderCell(i))}
     </div>
   ))
+
+  const onChangeMode = (mode: Mode) => setMode(mode)
   const onClickSolve = () => {
     const summary = SummaryLogic.fromMatrix(matrixData)
     const regExp = SummaryLogic.toRegExp(summary)
@@ -55,6 +59,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <span className={styles.version}>v{VERSION}</span>
         <h1 className={styles.title}>Welcome to Reverse Wordle!</h1>
+        <ModePicker onChange={onChangeMode} mode={mode} />
         {body}
         <button role="button" className={styles.solve} onClick={onClickSolve}>
           Solve

@@ -14,3 +14,20 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.green {
+    background: lawngreen;
+}
+
+.yellow {
+    background: yellow;
+}
