@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   const [match, setMatch] = useState<RegExpMatchArray | null>(null)
   const [mode, setMode] = useState<Mode>(Mode.Type)
   const renderCell = (i: number) => (c: CharCell, j: number) =>
-    <Cell setter={setMatrixData} i={i} j={j} key={j} data={c} />
+    <Cell setter={setMatrixData} i={i} j={j} key={j} data={c} mode={mode} />
   const body = matrixData.map((row, i) => (
     <div className="row" key={i} data-row={i}>
       {row.map(renderCell(i))}
@@ -75,12 +75,13 @@ interface ICell {
   i: number
   j: number
   data: CharCell
+  mode: Mode
 }
 
 const keyRegExp = /^Key[A-Z]$/
 const BACKSPACE_KEY = 'Backspace'
 
-const Cell: FC<ICell> = ({ setter, i, j, data }) => {
+const Cell: FC<ICell> = ({ setter, i, j, data, mode }) => {
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = evt => {
     const setChar = (char: string) => {
       setter(m => {
@@ -115,6 +116,25 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       return [...m]
     })
   }
+  const onClick = () => {
+    if (mode === Mode.Green) {
+      setter(m => {
+        m[i][j] = {
+          ...data,
+          status: CharCellStatus.Exact,
+        }
+        return [...m]
+      })
+    } else if (mode === Mode.Yellow) {
+      setter(m => {
+        m[i][j] = {
+          ...data,
+          status: CharCellStatus.Exist,
+        }
+        return [...m]
+      })
+    }
+  }
   const classname = cx(styles.cell, {
     [styles.exact]: data.status === CharCellStatus.Exact,
     [styles.exist]: data.status === CharCellStatus.Exist,
@@ -128,6 +148,7 @@ const Cell: FC<ICell> = ({ setter, i, j, data }) => {
       className={classname}
       maxLength={1}
       onContextMenu={onRightClick}
+      onClick={onClick}
     />
   )
 }
